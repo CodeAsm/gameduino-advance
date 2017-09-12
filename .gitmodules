@@ -1,0 +1,3 @@
+[submodule "lib/PDQ_GFX_Libs"]
+	path = lib/PDQ_GFX_Libs
+	url = https://github.com/XarkLabs/PDQ_GFX_Libs

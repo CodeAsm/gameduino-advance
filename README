@@ -1,0 +1,21 @@
+ 
+# Gameduino Advance
+
+This is a personal project to create a Handheld gameconsole with an Atmega386 MCU (either Arduino bootloader or smaller)
+and a Color TFT. More details will come
+
+## Hardware
+
+Detail will come, basicly a Atmega386 and a 2.2'' TFT are required aswell as a PCF8574 for button readout
+
+## Code compilation
+
+Will be documented later
+
+## Games
+
+A few games are planned to be build into the system, later maybe more options aswell removing the default ones
+
+## Future plans
+
+There are non sofar.
