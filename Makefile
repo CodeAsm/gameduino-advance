@@ -17,6 +17,9 @@
 
 ttyUSB :=$(shell echo -n "/dev/"; dmesg | grep tty|grep USB|tail -1|rev|awk '{print $$1}'|rev)
 baud   :=-b 57600
+
+#if verbose = -v, compiling will be verbose
+verbose = 
 #if a ttyACM is used, change the tty name (else it will be "device").
 #this doesnt work correctly if usb naming is broken
 ifneq ($(ttyUSB), /dev/ttyUSB0)
@@ -27,8 +30,8 @@ ifneq ($(ttyUSB), /dev/ttyUSB0)
 endif
 
 main.hex:main.cpp blink.o
-	avr-gcc -Os -mmcu=atmega328p -c -o main.o main.cpp 
-	avr-gcc -mmcu=atmega328p main.o blink.o -o main
+	avr-gcc $(verbose) -Os -mmcu=atmega328p -c -o main.o main.cpp 
+	avr-gcc $(verbose) -mmcu=atmega328p main.o blink.o -o main
 	avr-objcopy -O ihex -R .eeprom main main.hex
 	
 blink.o:lib/blink.cpp
@@ -41,3 +44,9 @@ test:
 	echo $(ttyUSB)
 clean:
 	rm *.o main *.hex
+
+
+# Listing of phony targets.
+.PHONY : all begin finish end sizebefore sizeafter gccversion \
+build elf hex eep lss sym coff extcoff \
+clean clean_list program debug gdb-config
