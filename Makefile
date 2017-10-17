@@ -26,7 +26,7 @@ ifneq ($(ttyUSB), /dev/ttyUSB0)
 	baud =
 endif
 
-main:main.cpp blink.o
+main.hex:main.cpp blink.o
 	avr-gcc -Os -mmcu=atmega328p -c -o main.o main.cpp 
 	avr-gcc -mmcu=atmega328p main.o blink.o -o main
 	avr-objcopy -O ihex -R .eeprom main main.hex
