@@ -24,7 +24,7 @@ verbose =
 #this doesnt work correctly if usb naming is broken
 ifneq ($(ttyUSB), /dev/ttyUSB0)
 	#gsub is needed to remove the last :
-	ttyUSB :=$(shell echo -n "/dev/"; dmesg | grep tty|grep USB|tail -1|awk '{gsub(/:/,"");print $$4}')
+	ttyUSB :=$(shell echo -n "/dev/"; dmesg | grep tty|grep USB|tail -1|awk '{gsub(/:/,"");print $$5}')
 	# no buad for auto detection
 	baud =
 endif
