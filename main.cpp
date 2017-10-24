@@ -4,7 +4,11 @@
 
 #include <avr/io.h>      //  IO, cant we use arduino libs or even smaller? (we should, UART and pins)
 #include "main.h"
-#include "lib/blink.h"
+#include "blink.h"
+
+#include "Arduino.h"
+#include "PDQ_ST7735_config.h"
+#include "lib/PDQ_GFX_Libs/PDQ_ST7735/PDQ_ST7735.h"
 
 bool doLed = true;
 /*

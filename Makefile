@@ -18,8 +18,10 @@
 ttyUSB :=$(shell echo -n "/dev/"; dmesg | grep tty|grep USB|tail -1|rev|awk '{print $$1}'|rev)
 baud   :=-b 57600
 
+
+include := -I lib/ -I lib/arduino -I lib/PDQ_GFX_Libs/PDQ_GFX -I lib/PDQ_GFX_Libs/PDQ_ST7735
 #if verbose = -v, compiling will be verbose
-verbose = 
+verbose = -v
 #if a ttyACM is used, change the tty name (else it will be "device").
 #this doesnt work correctly if usb naming is broken
 ifneq ($(ttyUSB), /dev/ttyUSB0)
@@ -29,13 +31,16 @@ ifneq ($(ttyUSB), /dev/ttyUSB0)
 	baud =
 endif
 
-main.hex:main.cpp blink.o
-	avr-gcc $(verbose) -Os -mmcu=atmega328p -c -o main.o main.cpp 
-	avr-gcc $(verbose) -mmcu=atmega328p main.o blink.o -o main
-	avr-objcopy -O ihex -R .eeprom main main.hex
-	
-blink.o:lib/blink.cpp
-	avr-gcc -Os -mmcu=atmega328p -c -o blink.o lib/blink.cpp
+main.hex:main.cpp obj/blink.o 
+	avr-gcc $(verbose) $(include) -Os -mmcu=atmega328p -c -o obj/main.o main.cpp 
+	avr-gcc $(verbose) $(include) -mmcu=atmega328p obj/main.o obj/blink.o -o obj/main
+	avr-objcopy -O ihex -R .eeprom obj/main main.hex
+
+obj/PDQ_ST7735.o:lib/PDQ_GFX_Libs/PDQ_ST7735/PDQ_ST7735.cpp
+	avr-gcc $(verbose) $(include) -Os -mmcu=atmega328p -c -o obj/PDQ_ST7735.o lib/PDQ_GFX_Libs/PDQ_ST7735/PDQ_ST7735.cpp
+
+obj/blink.o:lib/blink.cpp
+	avr-gcc -Os $(include) -mmcu=atmega328p -c -o obj/blink.o lib/blink.cpp
 	
 program:main.hex main.cpp lib/blink.cpp
 	avrdude -v -p m328p -c arduino -P $(ttyUSB) $(baud) -D -U flash:w:main.hex:i
@@ -43,7 +48,7 @@ program:main.hex main.cpp lib/blink.cpp
 test:
 	echo $(ttyUSB)
 clean:
-	rm *.o main *.hex
+	rm obj/*.o obj/main *.hex
 
 
 # Listing of phony targets.
