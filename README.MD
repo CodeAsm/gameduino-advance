@@ -69,6 +69,15 @@ The TFT library (requireing the SPI lib) enables us to write to the TFT and draw
 
 A few games are planned to be build into the system, later maybe more options aswell removing the default ones
 
+### FlyBird
+based on Flappy bird, click or clap to flap higher, avoid obsctacles to gain points
+
+### Breakout
+Simple paddle the ball to a brick for points, clear the field to win. Dont lose the ball tho.
+
+### Another game
+Well, there should be a game more here.
+
 ## Future plans
 
 There are non sofar.
