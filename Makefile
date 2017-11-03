@@ -19,7 +19,7 @@ ttyUSB :=$(shell echo -n "/dev/"; dmesg | grep tty|grep USB|tail -1|rev|awk '{pr
 baud   :=-b 57600
 
 
-include := -I lib/ -I lib/arduino -I lib/PDQ_GFX_Libs/PDQ_GFX -I lib/PDQ_GFX_Libs/PDQ_ST7735
+include := -I lib/
 #if verbose = -v, compiling will be verbose
 verbose = -v
 #if a ttyACM is used, change the tty name (else it will be "device").
@@ -36,8 +36,6 @@ main.hex:main.cpp obj/blink.o
 	avr-gcc $(verbose) $(include) -mmcu=atmega328p obj/main.o obj/blink.o -o obj/main
 	avr-objcopy -O ihex -R .eeprom obj/main main.hex
 
-obj/PDQ_ST7735.o:lib/PDQ_GFX_Libs/PDQ_ST7735/PDQ_ST7735.cpp
-	avr-gcc $(verbose) $(include) -Os -mmcu=atmega328p -c -o obj/PDQ_ST7735.o lib/PDQ_GFX_Libs/PDQ_ST7735/PDQ_ST7735.cpp
 
 obj/blink.o:lib/blink.cpp
 	avr-gcc -Os $(include) -mmcu=atmega328p -c -o obj/blink.o lib/blink.cpp
