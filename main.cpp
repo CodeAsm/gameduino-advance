@@ -4,7 +4,7 @@
 
 #include <avr/io.h>      //  IO, cant we use arduino libs or even smaller? (we should, UART and pins)
 #include "main.h"
-#include "lib/blink.h"
+#include "blink.h"
 
 bool doLed = true;
 /*
