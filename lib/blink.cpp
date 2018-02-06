@@ -1,5 +1,5 @@
 #define F_CPU 16000000UL
-#define BLINK_DELAY_MS 125
+#define BLINK_DELAY_MS 32
 #include "blink.h"
 #include <avr/io.h>      //  IO, cant we use arduino libs or even smaller? (we should, UART and pins)
 #include <util/delay.h>

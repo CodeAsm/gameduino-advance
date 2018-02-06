@@ -81,3 +81,7 @@ Well, there should be a game more here.
 ## Future plans
 
 There are non sofar.
+
+## references
+http://www.nongnu.org/avr-libc/user-manual/group__demo__project.html
+http://maxembedded.com/2013/11/the-spi-of-the-avr/
