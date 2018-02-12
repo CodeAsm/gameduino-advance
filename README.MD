@@ -13,6 +13,9 @@ The screen has a 176×220 resolution.
 
 The TFT comes with a MicroSD card slot, we currently dont use it. 
 
+As usual with diferent components that uses SPI, the pin names arent that clear, but its SPI. The ILI9225 is a SPI controller IC by datasheet and so the pins are in fact SPI, but labeled like I2C. it can be confusing sometimes.
+
+The arduino allows for software and hardware SPI. I dont know why people go for the software version, as the hardware version is capable of faster reads and writes wich is visible on the tft.
 The Arduino pins are connected as following:
 Arduino notation: Chip pin, Name, arduino pin name.
 
@@ -26,6 +29,7 @@ Arduino notation: Chip pin, Name, arduino pin name.
 | 14,D8,PB0| 9       | RS               |
 | RESET,P6 | 10      | RST              |
 | 15,D9,PB1| 11      | CS (chip select) |
+|||
 
 CS could be connected to GND to save a pin and always be selected (we dont like that in our case)
 RS is chosen to be 8, to freeup a ADC. 
@@ -69,13 +73,13 @@ The TFT library (requireing the SPI lib) enables us to write to the TFT and draw
 
 A few games are planned to be build into the system, later maybe more options aswell removing the default ones
 
-### FlyBird
-based on Flappy bird, click or clap to flap higher, avoid obsctacles to gain points
+### TicTacTo
+Place your eggs right to win from the computer. The only winning move, is not to play ;)
 
 ### Breakout
 Simple paddle the ball to a brick for points, clear the field to win. Dont lose the ball tho.
 
-### Another game
+### Another game (Flappy?)
 Well, there should be a game more here.
 
 ## Future plans
@@ -85,3 +89,8 @@ There are non sofar.
 ## references
 http://www.nongnu.org/avr-libc/user-manual/group__demo__project.html
 http://maxembedded.com/2013/11/the-spi-of-the-avr/
+
+## TODO
+defines (#define byte uint8_t) because we love the simple stuff, yet we still like to understand them
+main.h (header locks)
+git remote up

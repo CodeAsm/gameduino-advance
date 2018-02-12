@@ -30,16 +30,21 @@ endif
 
 all: main.hex
 
-main.hex:main.cpp $(ODIR)blink.o # obj/spi.o
+main.hex:main.cpp $(ODIR)blink.o $(ODIR)spi.o
 	$(COMPILE) $(verbose) $(CFLAGS) -c main.cpp -o $(ODIR)main.o
 #linking
-	$(COMPILE) $(verbose) $(CFLAGS)-Wl,-Map,main.map -o $(ODIR)main.elf $(ODIR)main.o $(ODIR)blink.o
+	$(COMPILE) $(verbose) $(CFLAGS)-Wl,-Map,main.map -o $(ODIR)main.elf $(ODIR)main.o $(ODIR)blink.o $(ODIR)spi.o
 #converting to hex
 	avr-objcopy -j .text -j .data -O ihex $(ODIR)main.elf main.hex
+
 
 #blink 
 obj/blink.o:lib/blink.cpp
 	$(COMPILE) $(verbose) $(CFLAGS) -c lib/blink.cpp -o $(ODIR)blink.o
+	
+#SPI 
+obj/spi.o:lib/spi.cpp
+	$(COMPILE) $(verbose) $(CFLAGS) -c lib/spi.cpp -o $(ODIR)spi.o
 	
 #obj/spi.o:lib/spi.cpp
 #	avr-gcc -Os $(include) -mmcu=atmega328p -c -o obj/spi.o lib/spi.cpp

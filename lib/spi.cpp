@@ -1,21 +1,24 @@
+#define uint8_t byte
 #include <avr/io.h>
 
 void InitSPI(void)
 {
-DDRB = (1<<PB4)|(1<<PB5) | (1<<PB7);	 // Set MOSI , SCK , and SS output
-SPCR = ( (1<<SPE)|(1<<MSTR) | (1<<SPR1) |(1<<SPR0));	// Enable SPI, Master, set clock rate fck/128  
+	 // Set MOSI ,MISO, SCK , and SS output
+ DDRB = (1<<DDB3)|(1<<DDB4)|(1<<DDB5)|(1<<DDB2);
+//SPCR = ( (1<<SPE)|(1<<MSTR) | (1<<SPR1) |(1<<SPR0));	// Enable SPI, Master, set clock rate fck/128  
+//SPCR = 0x50; // smaller for us, less clear.
+SPCR = (1<<SPE)|(1<<MSTR);
 }
 
-void WriteByteSPI(unsigned char byte)
-{	
-SPDR = byte;					//Load byte to Data register
-while(!(SPSR & (1<<SPIF))); 	// Wait for transmission complete 
-}
-
-char ReadByteSPI(char addr)
+void CloseSPI()
 {
-	SPDR = addr;					//Load byte to Data register
-	while(!(SPSR & (1<<SPIF))); 	// Wait for transmission complete 
-	addr=SPDR;
-	return addr;
+SPCR = 0x00;                       // clear SPI enable bit
+}
+
+byte TransferSPI(byte data)				// you can use uint8_t for byte
+{
+SPDR = data;                       // initiate transfer
+while (!(SPSR & 0x80));    
+									// wait for transfer to complete
+return SPDR;
 }
